@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask import flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
@@ -61,6 +61,7 @@ def sigin():
     else:
         msg = 'PASSWORD not match'
     flash(msg)
+    session['user'] = the_user.uname
     return redirect('/')
     # return redirect(url_for('all_users'))
 
@@ -73,6 +74,7 @@ def signup():
     print(user)
     db.session.add(user)
     db.session.commit()
+    session['user'] = user.uname
     tag1 = Tag('Python', user)
     tag2 = Tag('C++', user)
     print("User with python: ",tag1.user)
@@ -82,14 +84,36 @@ def signup():
     print('Record was successfully added')
     return redirect(url_for('all_tags'))
 
+@app.route('/all_users')
+def all_users():
+    if session['user'] == None:
+        return render_template('/')
+    print('Value of session["user"]', session['user'])
+    print('All users page')
+    users = User.query.all()
+    print(users)
+    if users == None:
+        users = ["no user"]
+    return '<h2>Users: {{users}}</h2>'
 
 @app.route('/all_tags')
 def all_tags():
-    return render_template('all_tags.html', tags = Tag.query.all())
+    uname = session['user']
+    user = User.query.filter_by(uname=uname).first()
+    print(Tag.query.all())
+    return render_template('all_tags.html', tags = Tag.query.filter_by(user=user).all())
+
+
+@app.route('/new_question')
+def all_questions():
+    # question_text = 
+    pass
 
 @app.route('/new_tag', methods=['GET','POST'])
 def new_tag():
     if request.method == 'POST':
+        uname = session['user']
+        user = User.query.filter_by(uname=uname).first()
         tag_name = request.form['tag']
         tag_new = Tag(tag_name, user)
         print(tag_new)
