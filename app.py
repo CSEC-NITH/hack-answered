@@ -2,7 +2,7 @@ from flask import Flask, render_template, session
 from flask import flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
-from models import User, Tag
+from models import User, UserTag, Question
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "some_key"
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -58,6 +58,7 @@ def sigin():
     print(the_user, the_user.uname, the_user.upass)
     if the_user.upass == upass:
         msg = 'PASSWORD MATCH'
+        return redirect('/new_tag')
     else:
         msg = 'PASSWORD not match'
     flash(msg)
@@ -75,8 +76,8 @@ def signup():
     db.session.add(user)
     db.session.commit()
     session['user'] = user.uname
-    tag1 = Tag('Python', user)
-    tag2 = Tag('C++', user)
+    tag1 = UserTag('Python', user)
+    tag2 = UserTag('C++', user)
     print("User with python: ",tag1.user)
     db.session.add(tag1)
     db.session.add(tag2)
@@ -92,32 +93,59 @@ def all_users():
     print('All users page')
     users = User.query.all()
     print(users)
-    if users == None:
-        users = ["no user"]
-    return '<h2>Users: {{users}}</h2>'
+    return '<h2>Users: {{users}}</h2>'.format(users)
 
 @app.route('/all_tags')
 def all_tags():
     uname = session['user']
     user = User.query.filter_by(uname=uname).first()
-    print(Tag.query.all())
-    return render_template('all_tags.html', tags = Tag.query.filter_by(user=user).all())
+    print(UserTag.query.all())
+    return render_template('all_tags.html', tags = UserTag.query.filter_by(user=user).all())
 
-
-@app.route('/new_question')
+@app.route('/all_questions')
 def all_questions():
-    # question_text = 
-    pass
-
+    uname = session['user']
+    user = User.query.filter_by(uname=uname).first()
+    print(Question.query.all())
+    return render_template('all_questions.html', questions = question_text.query.filter_by(user=user).all())
+        
 @app.route('/new_tag', methods=['GET','POST'])
 def new_tag():
     if request.method == 'POST':
         uname = session['user']
         user = User.query.filter_by(uname=uname).first()
         tag_name = request.form['tag']
-        tag_new = Tag(tag_name, user)
+        tag_new = UserTag(tag_name, user)
+        # db.session.add(tag_new)
+        # db.session.commit()
         print(tag_new)
     return '<h2><form method="POST" action="new_tag"><input name="tag" type="text" placeholder="tag name"/></form></h2>'
+
+@app.route('/new_qs', methods=['GET','POST'])
+def new_qs():
+    if request.method == 'POST':
+        uname = session['user']
+        user = User.query.filter_by(uname=uname).first()
+        tags = request.form['tags']
+        qs = request.form['qs']
+        
+        qs_new = Question(qs_new, user)
+
+        tags = tags.split(',')
+        for tag in tags:
+            tag = tag.strip()
+            tag = tag.lower()
+            tag_n = QuestionTag(tag, qs_new)
+
+        print(qs_new)
+
+    return """<h2><form method="POST" action="new_qs"><input name="qs" type="text" placeholder="question name"/>
+            <input name="tags" type="text" placeholder="tag name name"/>
+            <button>Submit</button>
+            </form></h2>
+            """
+
+    # <input name="tags" type="text" placeholder="tag name"/></form></h2>'
 
 if __name__=='__main__':
     db.drop_all()
