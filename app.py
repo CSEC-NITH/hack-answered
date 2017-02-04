@@ -12,30 +12,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'false'
 db.init_app(app)
 
-# @app.route('/')
-# def home_page():
-    # return render_template('base.html')
-
-# @app.route('/all_users')
-# def all_users():
-    # users = User.query.all()
-    # print(users)
-    # return render_template('users.html', users=users)
-
-# @app.route('/new', methods = ['GET', 'POST'])
-# def new():
-   # if request.method == 'POST':
-      # if not request.form['name'] or not request.form['city'] or not request.form['addr']:
-         # flash('Please enter all the fields', 'error')
-      # else:
-         # user = User(request.form['id'], request.form['city'],
-            # request.form['addr'], request.form['pin'])
-         
-         # db.session.add(user)
-         # db.session.commit()
-         # flash('Record was successfully added')
-         # return redirect(url_for('show_all'))
-   # return render_template('new.html')
+#######################################################
+#   Templates: 
+#
+#   first_page.html <- /
+#   question.html <- /qs/<id>
+#   questions.html <- /qs/all, my questions
+#   answers.html <- my answers
+#   profile.html <- /profile, /user/<uname>
+#   new_question.html 
+#
+######################################################
 
 @app.route('/')
 def first_page():
@@ -85,46 +72,11 @@ def all_users():
 @app.route('/qs/topic/all')
 def all_topics():
     pass
-@app.route('/profile')
-def profile_page_mine():
-    uname = session['user']
-    return redirect('/user/{}'.format(uname))
 
 @app.route('/qs/all')
 def all_questions():
     questions = Question.query.all()
-    return render_template('all_questions.html', questions=questions)
-
-@app.route('/logout')
-def logout():
-    session['user'] = ''
-    return redirect('/')
-
-@app.route('/all_tags')
-def all_tags():
-    uname = session['user']
-    user = User.query.filter_by(uname=uname).first()
-    print(user.usertags.all())
-    return render_template('all_tags.html', tags = user.usertags.all())
-
-@app.route('/questions')
-def my_questions():
-    uname = session['user']
-    user = User.query.filter_by(uname=uname).first_or_404()
-    print('Question: ',user)
-    questions = user.questions.all()
-    print(questions)
-    return render_template('my_questions.html', questions = questions)
-        
-@app.route('/user/<uname>', methods=['POST', 'GET'])
-def profile_page(uname):
-    user = User.query.filter_by(uname=uname).first_or_404()
-    if request.method == 'POST':
-        tag_name = request.form['tag']
-        tag_new = UserTag(tag_name, user)
-        db.session.add(tag_new)
-        db.session.commit()
-    return render_template('profile.html', user=user)
+    return render_template('questions.html', questions=questions)
 
 @app.route('/qs/<id>', methods=['POST', 'GET'])
 def questions_page(id):
@@ -139,13 +91,36 @@ def questions_page(id):
         print(question.answers.all())
     return render_template('question.html', question=question)
 
+@app.route('/profile')
+def profile_page_mine():
+    uname = session['user']
+    return redirect('/user/{}'.format(uname))
+
+@app.route('/questions')
+def my_questions():
+    uname = session['user']
+    user = User.query.filter_by(uname=uname).first_or_404()
+    print('Question: ',user)
+    questions = user.questions.all()
+    print(questions)
+    return render_template('questions.html', questions = questions)
+        
+@app.route('/user/<uname>', methods=['POST', 'GET'])
+def profile_page(uname):
+    user = User.query.filter_by(uname=uname).first_or_404()
+    if request.method == 'POST':
+        tag_name = request.form['tag']
+        tag_new = UserTag(tag_name, user)
+        db.session.add(tag_new)
+        db.session.commit()
+    return render_template('profile.html', user=user)
+
 @app.route('/answers')
 def my_answers():
     uname = session['user']
     user = User.query.filter_by(uname=uname).first()
     answers = user.answers.all()
     return render_template('answers.html', answers=answers)
-    
 
 @app.route('/new_question', methods=['GET','POST'])
 def new_qs():
@@ -165,10 +140,8 @@ def new_qs():
             db.session.add(tag_n)
         db.session.commit()
         print(qs_new)
-
     return render_template('new_question.html')
 
-    # <input name="tags" type="text" placeholder="tag name"/></form></h2>'
 @app.route('/api/ct')
 def create_tables():
     db.create_all()
@@ -178,6 +151,11 @@ def create_tables():
 def destroy_tables():
     db.drop_all()
     return 'Destroyed tables'
+
+@app.route('/logout')
+def logout():
+    session['user'] = ''
+    return redirect('/')
 
 if __name__=='__main__':
     app.run()
