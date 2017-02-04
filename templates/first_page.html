@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/css/login2.css">
+    </head>
+  <body>
+    <div class="login-page">
+      <div class="form">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="message">
+            <strong>
+              {{ messages[0] }}
+            </strong>
+          </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="signup" id="signup" class="register-form">
+          <input name="uname" type="text" placeholder="name"/>
+          <input name="upass" type="password" placeholder="password"/>
+          <input name="email" type="text" placeholder="email"/>
+          <input name="phone" type="text" placeholder="phone no."/>
+          <input name="comment" type="text" placeholder="comment"/>
+          <button>create</button>
+          <p class="message">Already registered? 
+            <a onclick="openLoginForm()" href="#">
+              Sign In
+            </a>
+          </p>
+        </form>
+        <form method="POST" id="login" action="login" class="login-form">
+          <input name="uname" type="text" placeholder="username"/>
+          <input name="upass" type="password" placeholder="password"/>
+          <button>login</button>
+          <p class="message">Not registered? 
+            <a onclick="openSignupForm()" href="#">
+              Create an account
+            </a>
+          </p>
+        </form>
+      </div>
+    </div>
+    <script>
+      var loginForm = document.getElementById('login');
+      var signupForm = document.getElementById('signup');
+      
+      function openSignupForm() {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+      }
+
+      function openLoginForm() {
+        loginForm.style.display = "block";
+        signupForm.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
