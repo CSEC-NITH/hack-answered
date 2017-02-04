@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask import flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
-from models import User
+from models import User, Tag
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "some_key"
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -68,14 +68,33 @@ def sigin():
 def signup():
     print("GOT A POST OF DATA !!!")
     user = User(request.form['uname'], request.form['upass'],
-    request.form['email'], request.form['phone'], request.form['comment'])
+    request.form['email'], request.form['name'], request.form['roll_no'], request.form['branch'])
 
     print(user)
     db.session.add(user)
     db.session.commit()
+    tag1 = Tag('Python', user)
+    tag2 = Tag('C++', user)
+    print("User with python: ",tag1.user)
+    db.session.add(tag1)
+    db.session.add(tag2)
+    db.session.commit()
     print('Record was successfully added')
-    return redirect(url_for('all_users'))
+    return redirect(url_for('all_tags'))
 
+
+@app.route('/all_tags')
+def all_tags():
+    return render_template('all_tags.html', tags = Tag.query.all())
+
+@app.route('/new_tag', methods=['GET','POST'])
+def new_tag():
+    if request.method == 'POST':
+        tag_name = request.form['tag']
+        tag_new = Tag(tag_name, user)
+        print(tag_new)
+    return '<h2><form method="POST" action="new_tag"><input name="tag" type="text" placeholder="tag name"/></form></h2>'
 
 if __name__=='__main__':
+    db.drop_all()
     app.run()

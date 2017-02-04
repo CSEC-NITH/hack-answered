@@ -7,30 +7,37 @@ if __name__=='__main__':
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    uname = db.Column(db.String(20), unique=True)
-    upass = db.Column(db.String(20))
-    email = db.Column(db.String(20))
-    phone = db.Column(db.String(20))
-    comment = db.Column(db.String(20))
-    # date = db.Column(db.Date)
-    # roll_no = db.Column(db.String(20), unique=True)
+    uname = db.Column(db.String(30), unique=True)
+    upass = db.Column(db.String(30))
+    email = db.Column(db.String(30))
+    name = db.Column(db.String(30))
+    roll_no = db.Column(db.String(20))
+    branch = db.Column(db.String(30))
+    # date_of_join = db.Column(db.DateTime())
+    tags = db.relationship('Tag', backref='user', lazy="dynamic")
 
-    def __init__(self, uname, upass, email, phone,comment):
+    def __init__(self, uname, upass, email, name, roll_no, branch):
         self.uname = uname
         self.upass = upass
         self.email = email
-        self.phone = phone
-        self.comment = comment
-        # self.roll_no = roll_no
+        self.name = name
+        self.roll_no = roll_no
+        self.branch = branch
 
     def __repr__(self):
         return ('<User {}>'.format(self.uname))
 
-# class Posts(db.Model):
-    # id = db.Column(db.Integer, primary_key=True)
-    # post_text = db.Column(db.String(220))
-    # user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
-    
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(220))
+    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, name, user):
+        self.name = name
+        self.user = user 
+
+    def __repr__(self):
+        return ('<Tag {}>'.format(self.name))
 
 
 if __name__=='__main__':
