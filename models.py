@@ -1,9 +1,5 @@
 # from app import db
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
-
-if __name__=='__main__':
-    from app import db
+from rdb import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +10,6 @@ class User(db.Model):
     roll_no = db.Column(db.String(20))
     branch = db.Column(db.String(30))
     # date_of_join = db.Column(db.DateTime())
-
     usertags = db.relationship('UserTag', backref='user', lazy="dynamic")
     questions = db.relationship('Question', backref='user', lazy="dynamic")
     answers =  db.relationship('Answer', backref='user', lazy="dynamic")
@@ -30,7 +25,6 @@ class User(db.Model):
     def __repr__(self):
         return ('<User {}>'.format(self.uname))
 
-
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question_text = db.Column(db.String(1000))
@@ -43,7 +37,7 @@ class Question(db.Model):
         self.user = user
         
     def __repr__(self):
-        return ('<question {}>'.format(self.question))
+        return ('<Question :{}>'.format(self.question_text))
 
 
 class Answer(db.Model):
@@ -56,9 +50,22 @@ class Answer(db.Model):
     def __init__ (self,answer_text, user, question):
         self.answer_text = answer_text
         self.user = user
+        self.question = question
 
     def __repr__(self):
-        return ('<answer {}>'.format(self.answer))
+        return ('<answer {}>'.format(self.answer_text))
+
+class QuestionTag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
+      
+    def __init__ (self,name,question):
+        self.name = name
+        self.question = question
+
+    def __repr__(self):
+        return ('<questiontag {}>'.format(self.name))
 
 class UserTag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -70,19 +77,8 @@ class UserTag(db.Model):
         self.user = user 
 
     def __repr__(self):
-        return ('<Tag {}>'.format(self.name))
+        return ('<UserTag {}>'.format(self.name))
 
-class QuestionTag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    questiontagname = db.Column(db.String(1000))
-    question_id =  db.Column(db.Integer, db.ForeignKey('question.id')) #foreign key to link with question
-    
-    def __init__ (self,questiontagname,question):
-        self.questiontagname = questiontagname
-        self.question = question
-
-    def __repr__(self):
-        return ('<questiontag {}>'.format(self.questiontagname))
 
 # class AnswerTag(db.Model):
     # id = db.Column(db.Integer, primary_key=True)
@@ -95,9 +91,3 @@ class QuestionTag(db.Model):
 
     # def __repr__(self):
         # return ('<answertag {}>'.format(self.answertagname))
-
-
-if __name__=='__main__':
-    db.drop_all()
-    db.create_all()
-

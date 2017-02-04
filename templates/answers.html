@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% for answer in answers %}
+<h1>
+    {{ answer.answer_text }}
+</h1>
+{% endfor %}
+{% endblock %}
+
