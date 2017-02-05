@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <form action="/new_question" method="POST">
+    <textarea id="ques_area" name="question" type="text" placeholder="Question Text"></textarea>
+    <br>
+      <input name="tags" placeholder="enter tags separated by comma">
+    <br>
+    Tags: 
+    <ul>
+      <li><span class="tags">tag 1</span></li>
+      <li><span class="tags">tag 2</span></li>
+    </ul>
+    <button>Submit</button>
+  </form>
+<script>
+    var area = document.getElementById('ques_area');
+    area.addEventListener("keyup", function() {
+        console.log('some change');
+        console.log(area.text);
+    });
+</script>
+        
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+  {% for q in questions %}
+    <h4> @{{ q.user.uname }}: </h4>
+    <a href="/qs/{{q.id}}">
+      {{ q.question_text }}
+    </a>
+    <br>
+  {% endfor %}
+{% endblock %}

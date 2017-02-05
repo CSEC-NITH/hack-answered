@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QAnsrd</title>
+</head>
+    <style>
+      #nav_links {
+        padding: 8px;
+        padding-right: 10px;
+        background-color: cyan;
+      }
+      #nav_links > li {
+        display: inline;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+<body>
+    <h1> QAnsrd </h1>
+    <ul id="nav_links">
+        <li>
+            <a href="/qs/all">All questions</a>
+        </li>
+        <li>
+            <a href="/qs/topic/all">Question of some topic</a>
+        </li>
+        <li>
+            <a href="/qs/recc">Recommended question</a>
+        </li>
+        <li>
+            <a href="/new_question">Ask question</a>
+        </li>
+        <li>
+            <a href="/profile">View Profile</a>
+        </li>
+        <li>
+            <a href="/questions">My questions</a>
+        </li>
+        <li>
+            <a href="/answers">My answers</a>
+        </li>
+        <li>
+            <a href="/logout">Logout</a>
+        </li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    {% block body %}
+    {% endblock %}
+    
+</body>
+    
+</body>
+</html>
