@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h2>
+  Username: {{ user.uname }}
+  <br>
+  <br>
+  Tags: 
+  {% for tag in user.usertags.all() %}
+  <br>
+  {{ tag.name }}
+  {% endfor %}
+  <form action="/user/{{user.uname}}" method="POST">
+    <input name="tag" type="text" placeholder="Add Tag">
+  </form>
+</h2>
+{% endblock %}

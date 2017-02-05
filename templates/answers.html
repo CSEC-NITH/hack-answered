@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% for answer in answers %}
+<a href="/qs/{{answer.question.id}}">
+        Ques: {{ answer.question.question_text }}: <br>
+    </a>
+    Ans: {{ answer.answer_text }}
+{% endfor %}
+{% endblock %}
+

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>
+  @{{question.user.uname}} {{ question.question_text }}
+</h2>
+<form action="#" method="POST">
+  <textarea name="answer" placeholder="Enter your answer here"></textarea>
+  <button>Submit</button>
+</form>
+{% for answer in question.answers.all() %}
+  @{{answer.user.uname}}: {{ answer.answer_text }}
+  <br>
+{% endfor %}
+{% endblock %}
+
