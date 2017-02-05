@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<title>
+    {{
+    name
+    }}
+
+    </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+</style>
+<body class="w3-theme-l5">
+    
+
+
+
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m3">
+      <!-- Profile -->
+      <div class="w3-card-2 w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">Sagar deep kushwaha</h4>
+         <p class="w3-center"><img src="/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="photo"></p>
+         <hr>
+         <p><i class="fa fa-envelope"></i> email@email.com</p>
+         <p><i class=""></i> Roll_no</p>
+         <p><i class=""></i> Branch</p>
+        </div>
+      </div>
+      <br>
+      
+      <!-- Accordion -->
+      <div class="w3-card-2 w3-round">
+        
+          
+           
+      </div>
+      <br>
+      
+      <!-- Interests --> 
+      <div class="w3-card-2 w3-round w3-white w3-hide-small">
+          
+        <div class="w3-container">
+          <h4>ADD INTERESTS</h4>
+            <form>
+			SELECT:-<br>
+			<select id="tags">
+				<option>CPP 	</option>
+				<option>C 		</option>
+				<option>JAVA 	</option>
+				<option>PYTHON	</option>
+				<option>RUBY 	</option>
+				<option>MILK 	</option>
+				<option>CSS 	</option>
+				<option>HTML 	</option>
+				<option>WHAT's 	</option>
+				<option>UP 		</option>
+			</select>
+			<input type="button" onclick="insrt()" value=">>">
+		</form>
+
+          <p id="intrsts">
+            <span class="w3-tag w3-small w3-theme-d5">C</span>
+            <span class="w3-tag w3-small w3-theme-d4">C++</span>
+            <span class="w3-tag w3-small w3-theme-d3">java</span>
+            <span class="w3-tag w3-small w3-theme-d2">python</span>
+            <span class="w3-tag w3-small w3-theme-d1">javascript</span>
+            <span class="w3-tag w3-small w3-theme">php</span>
+            
+          </p>
+	<script>
+	
+	var txt="";
+
+	function insrt()
+{
+	var tags = document.getElementById("tags");
+	var otag = tags.options[tags.selectedIndex].text;
+    var li = "<li>" + otag + "</li>";
+	document.getElementById("intrsts").appendChild(li);
+    return  true;
+}
+
+	</script>
+        </div>
+      </div>
+      <br>
+      
+      <!-- Alert Box -->
+      <div class="w3-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+        <span onclick="this.parentElement.style.display='none'" class="w3-hover-text-grey w3-closebtn">
+          <i class="fa fa-remove"></i>
+        </span>
+        <p><strong>Hey!</strong></p>
+        <p>welcome to qansrd.</p>
+      </div>
+    
+    <!-- End Left Column -->
+    </div>
+    
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+    
+      <div class="w3-row-padding">
+        <div class="w3-col m12">
+          <div class="w3-card-2 w3-round w3-white">
+            
+          </div>
+        </div>
+      </div>
+      
+      <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+        
+        <span class="w3-right w3-opacity">1 min</span>
+        <h4>Username1</h4><br>
+        <hr class="w3-clear">
+        <p>What are the differences between system, device and kernel programming?</p>
+          <div class="w3-row-padding" style="margin:0 -16px">
+           
+        </div>
+
+        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  answers
+          </button> 
+      </div>
+      
+      <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+       
+        <span class="w3-right w3-opacity">16 min</span>
+        <h4>Username2</h4><br>
+        <hr class="w3-clear">
+        <p>How do I get following output in android studio using listview or recyclerView?</p>
+        
+        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>   answers</button> 
+      </div>  
+
+      <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+       
+        <span class="w3-right w3-opacity">32 min</span>
+        <h4>username3</h4><br>
+        <hr class="w3-clear">
+        
+        
+        <p>How do I write a python script to check my exam results when uploaded and notify me?
+          </p>
+       
+        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>   answers</button> 
+      </div> 
+      
+    <!-- End Middle Column -->
+    </div>
+    
+    <!-- Right Column -->
+    <div class="w3-col m2">
+      <div class="w3-card-2 w3-round w3-white w3-center">
+        <div class="w3-container">
+          <p>Upcoming Events:</p>
+          <img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
+          <p><strong>Hackathon</strong></p>
+          <p>saturday-sunday </br>10:00am to 6:00pm</\br></p>
+         
+        </div>
+      </div>
+      <br>
+      
+     
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
+
+<!-- Footer -->
+<footer class="w3-container w3-theme-d3 w3-padding-16">
+  <h5>Footer</h5>
+    <img src="C:\Users\Sagar_deep\Desktop\requirements\logo\facebook-icon-logo-vector-400x400.png" alt="Facebook" style="width:3%;">
+             <img src="C:\Users\Sagar_deep\Desktop\requirements\logo\LinkedIn_logo_initials.png" alt="linkedin" style="width:3%;">
+    <img src="C:\Users\Sagar_deep\Desktop\requirements\logo\download.png" alt="twitter" style="width:3%;">
+
+</footer>
+
+
+ 
+<script>
+// Accordion
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme-d1";
+    } else { 
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className = 
+        x.previousElementSibling.className.replace(" w3-theme-d1", "");
+    }
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+
+</body>
+</html> 
+=======
+{% extends "base.html" %}
+
+{% block body %}
+<h2>
+  Username: {{ user.uname }}
+  <br>
+  <br>
+  Tags: 
+  {% for tag in user.usertags.all() %}
+  <br>
+  {{ tag.name }}
+  {% endfor %}
+  <form action="/user/{{user.uname}}" method="POST">
+    <input name="tag" type="text" placeholder="Add Tag">
+  </form>
+</h2>
+{% endblock %}
+>>>>>>> ab04611c9d9f3f71f44aa675f31d9e8398a6bd04

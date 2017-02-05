@@ -2,9 +2,9 @@
 
 {% block body %}
   <form action="/new_question" method="POST">
-    <textarea name="question" type="text" placeholder="Question Text"></textarea>
+    <textarea id="ques_area" name="question" type="text" placeholder="Question Text"></textarea>
     <br>
-      <input name="tags" placeholder="enter tags separated by comma">
+      <input id="tag_box"  name="tags" placeholder="enter tags separated by comma">
     <br>
     Tags: 
     <ul>
@@ -13,4 +13,32 @@
     </ul>
     <button>Submit</button>
   </form>
+<script>
+    function uniq(a) {
+    var prims = {"boolean":{}, "number":{}, "string":{}}, objs = [];
+
+    return a.filter(function(item) {
+        var type = typeof item;
+        if(type in prims)
+            return prims[type].hasOwnProperty(item) ? false : (prims[type][item] = true);
+        else
+            return objs.indexOf(item) >= 0 ? false : objs.push(item);
+    });
+    }
+
+    var area = document.getElementById('ques_area');
+    var tagbox = document.getElementById('tag_box');
+    var myTags = []
+    var regex = /#\w*\s/g;
+    area.addEventListener("keyup", function() {
+        console.log('some change');
+        console.log(area.value);
+        var myTag = area.value.match(regex);
+        console.log(myTag);
+        myTags = uniq(myTag);
+        console.log(myTags);
+        tagbox.value = myTags.join(',');
+    });
+</script>
+        
 {% endblock %}

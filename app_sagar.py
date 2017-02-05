@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from models import User, UserTag, Question, QuestionTag, Answer
 from rdb import db
-from flask_babel import format_datetime,format_date,Babel
-
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "some_key"
@@ -13,7 +11,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'false'
 db.init_app(app)
-Babel(app)
 
 #######################################################
 #   Templates: 
@@ -26,12 +23,6 @@ Babel(app)
 #   new_question.html 
 #
 ######################################################
-
-
-def reformat_date(date,format =None):
-    return format_date(date,format)
-
-app.jinja_env.filters['datetime'] = reformat_date
 
 @app.route('/')
 def first_page():
@@ -91,11 +82,7 @@ def reccomended():
     lis = set(lis)
     print(lis)
     lis = list(lis)
-<<<<<<< HEAD
     return render_template('questions.html', questions=lis)
-=======
-    return render_template('questions_s.html', questions=lis)
->>>>>>> f3cb50634aad9c287b8d6cef23fe641213b4f04f
     
 @app.route('/all/users')
 def all_users():
@@ -112,24 +99,20 @@ def all_topics():
 @app.route('/qs/all')
 def all_questions():
     questions = Question.query.all()
-    return render_template('questions_s.html', questions=questions)
+    return render_template('questions.html', questions=questions)
 
 @app.route('/qs/<id>', methods=['POST', 'GET'])
 def questions_page(id):
-    print('PAGE OPENED: ', id)
     question = Question.query.filter_by(id=id).first_or_404()
     uname = session['user']
     user = User.query.filter_by(uname=uname).first()
-    print(question.answers.all())
     if request.method == 'POST':
         answer_text = request.form['answer']
         answer = Answer(answer_text, user, question)
-        print(answer.answer_text)
         db.session.add(answer)
         db.session.commit()
         print(question.answers.all())
-    print(question.answers.all())
-    return render_template('question_s.html', question=question)
+    return render_template('question.html', question=question)
 
 @app.route('/profile')
 def profile_page_mine():
@@ -143,7 +126,7 @@ def my_questions():
     print('Question: ',user)
     questions = user.questions.all()
     print(questions)
-    return render_template('questions_s.html', questions = questions)
+    return render_template('questions.html', questions = questions)
         
 @app.route('/user/<uname>', methods=['POST', 'GET'])
 def profile_page(uname):
@@ -153,7 +136,7 @@ def profile_page(uname):
         tag_new = UserTag(tag_name, user)
         db.session.add(tag_new)
         db.session.commit()
-    return render_template('profile.html', user=user,date=user.user_date)
+    return render_template('profile.html', user=user)
 
 @app.route('/answers')
 def my_answers():

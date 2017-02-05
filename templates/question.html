@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% block body %}
 <h2>
-  @{{question.user.uname}} {{ question.question_text }}
+  @{{question.user.uname}} {{ question.question_text }} 
 </h2>
+  @Tags: {% for tag in question.question_tags.all() %}
+  {{ tag.name }}, 
+  {% endfor %}
 <form action="#" method="POST">
   <textarea name="answer" placeholder="Enter your answer here"></textarea>
   <button>Submit</button>
