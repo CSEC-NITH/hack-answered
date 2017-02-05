@@ -36,6 +36,9 @@ app.jinja_env.filters['datetime'] = reformat_date
 @app.route('/')
 def first_page():
     return render_template('first_page.html')
+@app.route('/about')
+def first_page():
+    return render_template('aboutpage1.html')
 
 @app.route('/login', methods = ['POST'])
 def sigin():
