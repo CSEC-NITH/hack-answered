@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from models import User, UserTag, Question, QuestionTag, Answer
 from rdb import db
+from flask_babel import format_datetime,format_date,Babel
+
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "some_key"
@@ -11,6 +13,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'false'
 db.init_app(app)
+Babel(app)
 
 #######################################################
 #   Templates: 
@@ -23,6 +26,12 @@ db.init_app(app)
 #   new_question.html 
 #
 ######################################################
+
+
+def reformat_date(date,format =None):
+    return format_date(date,format)
+
+app.jinja_env.filters['datetime'] = reformat_date
 
 @app.route('/')
 def first_page():
@@ -61,6 +70,29 @@ def signup():
     print('Record was successfully added')
     return redirect('/user/{}'.format(user.uname))
 
+@app.route('/qs/recc')
+def reccomended():
+    uname = session['user']
+    user = User.query.filter_by(uname=uname).first_or_404()
+    user_tags = user.usertags.all()
+    lis = []
+    user_tags_text = [u.name for u in user_tags]
+    print('USER TAGS: ',user_tags_text)
+    questions = Question.query.all()
+    print('Questions: ', questions)
+    for qs in questions:
+        print(qs.question_tags.all())
+        qs_tags =  qs.question_tags.all()
+        for qs_tag in qs_tags:
+            for tag in user_tags_text:
+                if qs_tag.name == tag:
+                    print('Matched question: ', qs.question_text)
+                    lis.append(qs)
+    lis = set(lis)
+    print(lis)
+    lis = list(lis)
+    return render_template('questions.html', questions=lis)
+    
 @app.route('/all/users')
 def all_users():
     print('Value of session["user"]:', session['user'])
@@ -113,7 +145,7 @@ def profile_page(uname):
         tag_new = UserTag(tag_name, user)
         db.session.add(tag_new)
         db.session.commit()
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user,date=user.user_date)
 
 @app.route('/answers')
 def my_answers():
