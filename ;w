@@ -63,26 +63,6 @@ def signup():
 
 @app.route('/qs/recc')
 def reccomended():
-    uname = session['user']
-    user = User.query.filter_by(uname=uname).first_or_404()
-    user_tags = user.usertags.all()
-    lis = []
-    user_tags_text = [u.name for u in user_tags]
-    print('USER TAGS: ',user_tags_text)
-    questions = Question.query.all()
-    print('Questions: ', questions)
-    for qs in questions:
-        print(qs.question_tags.all())
-        qs_tags =  qs.question_tags.all()
-        for qs_tag in qs_tags:
-            for tag in user_tags_text:
-                if qs_tag.name == tag:
-                    print('Matched question: ', qs.question_text)
-                    lis.append(qs)
-    lis = set(lis)
-    print(lis)
-    lis = list(lis)
-    return render_template('questions.html', questions=lis)
     
 @app.route('/all/users')
 def all_users():
