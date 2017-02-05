@@ -140,7 +140,7 @@ def profile_page(uname):
         tag_new = UserTag(tag_name, user)
         db.session.add(tag_new)
         db.session.commit()
-    return render_template('profile.html', user=user)
+    return render_template('profile_sagar.html', user=user)
 
 @app.route('/answers')
 def my_answers():
