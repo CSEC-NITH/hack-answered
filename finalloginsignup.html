@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="loginsignup.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        
+    </head>
+  <body>  
+      <!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout">
+  <header class="mdl-layout__header" id="headershubham">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+        <h1><span id="heading" class="mdl-layout-title">QAnserd</span></h1>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      
+    </div>
+  </header>
+ 
+  <main class="mdl-layout__content">
+    <div class="page-content"><!-- Your content goes here -->  
+    <div class="login-page">
+      <div class="form">
+          <div class="message">
+            <strong>
+            </strong>
+          </div>
+        <form method="POST" action="signup" id="signup" class="register-form">
+          <input name="uname" type="text" placeholder="username"/>
+          <input name="upass" type="password" placeholder="password"/>
+          <input name="email" type="text" placeholder="email"/>
+          <input name="name" type="text" placeholder="Full name"/>
+          <input name="roll_no" type="text" placeholder="Roll No"/>
+          <input name="branch" type="text" placeholder="Branch"/>
+          <button>create</button>
+          <p class="message">Already registered? 
+            <a onclick="openLoginForm()" href="#">
+              Sign In
+            </a>
+          </p>
+        </form>
+        <form method="POST" id="login" action="login" class="login-form">
+          <input name="uname" type="text" placeholder="username"/>
+          <input name="upass" type="password" placeholder="password"/>
+          <button>login</button>
+          <p class="message">Not registered? 
+            <a onclick="openSignupForm()" href="#">
+              Create an account
+            </a>
+          </p>
+        </form>
+      </div>
+    </div>
+      </div>
+  <div id="article1" class="demo-card-wide mdl-card mdl-shadow--4dp">
+      <div class="mdl-card__title">
+        <h1 class="mdl-card__title-text" style="color: skyblue"><b>Welcome</b></h1>
+      </div>
+      <div class="mdl-card__supporting-text"><h5>
+             QAnserd is a question-and-answer site where questions are asked, answered, edited and organized by its community of users. The company was founded in Feb 2017, and the website will be made available to the public soon. Users can collaborate by editing questions and suggesting edits to other users' answers.
+             QAnserd was founded by team UTKARSH.
+            
+          </h5>
+    </div>
+      <div class="mdl-card__actions mdl-card--border">
+      </div>
+      <div class="mdl-card__menu">
+    <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+      <i class="material-icons">share</i>
+    </button>
+  </div>
+</div>
+      
+    </main>
+</div>
+      
+      
+      
+   <script>
+      var loginForm = document.getElementById('login');
+      var signupForm = document.getElementById('signup');
+      
+      function openSignupForm() {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+      }
+      function openLoginForm() {
+        loginForm.style.display = "block";
+        signupForm.style.display = "none";
+      }
+    </script>
+    <link rel="stylesheet" href="footercss.css">
+            <footer class="page__footer">
+
+    <div class="footer-social">
+    <span>Connect with us:</span>
+    <li><a href="https://www.facebook.com/QAnserd-757309487758971/">
+        <img src='http://www.womenactionmedia.org/cms/assets/themes/crate/images/social/facebook.png' />
+    </a></li>
+<li><a href="https://github.com/Hackathon376/">
+    <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAYFBMVEX///8XFRXw8PAhICD4+Pj7+/vn5+eioqJjY2PR0dEgHh7u7u49PT1fXl46OTnOzs41NDQmJSV7e3utq6tubm5zc3MbGhqVlJSKiopKSkpWVlbBwcHZ2dloZmYuLi6TkpJHI1OrAAABPklEQVQ4jXVS2baDIAwMuIALitWqaGv//y8vJOgR8OZBkJkhyRCAKxrxbWvG6vYrGkijkuwWsopgPrEoJh7IdYwzpm+X7FmKM5btJ94/4pbR+/yH/elUwMpUZ78H1YH1jZCLwbZojG11EDmMWCkmQImriH/oyo8TVnjskqhrFwTpFEBJSceYMNJ5CQLXIzG3ORAQIP2aBCkldLjylMAR6GDGDCkOgDlmIN+fCPQ+RKifCDURat9NEqWXts82nEa09BKsLWK8IOV0OvaKCa/TYT7TTgZllH5CZ2vQ28p3Y/dS9Jio6IXyKvZ2ZPuz5Ma/nQt1zc2M167utUvnmx/C/SKsVK9Vb8DFuvtWmhM3/qC0pi63CrnH9VW3Y5if+OUBQd/6arb7oxNhC2fIjnRAGJIR4osefIp80MvDBP0Tf+zPC+5F2aFWAAAAAElFTkSuQmCC'/>
+</a></li>
+                </body>
+      </html>
