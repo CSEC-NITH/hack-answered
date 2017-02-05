@@ -31,13 +31,18 @@ Babel(app)
 def reformat_date(date,format =None):
     return format_date(date,format)
 
-app.jinja_env.filters['datetime'] = reformat_date
+# app.jinja_env.filters['datetime'] = reformat_date
 
 @app.route('/')
 def first_page():
+    return render_template('finalfirstpage.html')
+
+@app.route('/first_page')
+def welcome_page():
     return render_template('first_page.html')
+
 @app.route('/about')
-def first_page():
+def about_page():
     return render_template('aboutpage1.html')
 
 @app.route('/login', methods = ['POST'])
