@@ -37,6 +37,10 @@ def reformat_date(date,format =None):
 def first_page():
     return render_template('finalfirstpage.html')
 
+@app.route('/f_f')
+def ff():
+    return render_template('finalloginsignup.html')
+
 @app.route('/first_page')
 def welcome_page():
     return render_template('first_page.html')
