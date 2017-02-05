@@ -14,8 +14,9 @@ class User(db.Model):
     roll_no = db.Column(db.String(20))
     branch = db.Column(db.String(30))
     # date_of_join = db.Column(db.DateTime())
-    tags = db.relationship('Tag', backref='user', lazy="dynamic")
-
+    usertags = db.relationship('UserTag', backref='user', lazy="dynamic")
+    questiontag = db.relationship('QuestionTag', backref='user', lazy="dynamic")
+    
     def __init__(self, uname, upass, email, name, roll_no, branch):
         self.uname = uname
         self.upass = upass
@@ -27,7 +28,20 @@ class User(db.Model):
     def __repr__(self):
         return ('<User {}>'.format(self.uname))
 
-class Tag(db.Model):
+class QuestionTag(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(1000))
+    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
+      
+    def __init__ (self,question,user):
+        self.question = question
+        self.user = user 
+
+    def __repr__(self):
+        return ('<questiontag {}>'.format(self.question))
+
+     
+class UserTag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(220))
     user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -37,7 +51,7 @@ class Tag(db.Model):
         self.user = user 
 
     def __repr__(self):
-        return ('<Tag {}>'.format(self.name))
+        return ('<UserTag {}>'.format(self.name))
 
 
 if __name__=='__main__':
