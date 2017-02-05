@@ -82,7 +82,7 @@ def reccomended():
     lis = set(lis)
     print(lis)
     lis = list(lis)
-    return render_template('questions.html', questions=lis)
+    return render_template('questions_s.html', questions=lis)
     
 @app.route('/all/users')
 def all_users():
@@ -99,20 +99,24 @@ def all_topics():
 @app.route('/qs/all')
 def all_questions():
     questions = Question.query.all()
-    return render_template('questions.html', questions=questions)
+    return render_template('questions_s.html', questions=questions)
 
 @app.route('/qs/<id>', methods=['POST', 'GET'])
 def questions_page(id):
+    print('PAGE OPENED: ', id)
     question = Question.query.filter_by(id=id).first_or_404()
     uname = session['user']
     user = User.query.filter_by(uname=uname).first()
+    print(question.answers.all())
     if request.method == 'POST':
         answer_text = request.form['answer']
         answer = Answer(answer_text, user, question)
+        print(answer.answer_text)
         db.session.add(answer)
         db.session.commit()
         print(question.answers.all())
-    return render_template('question.html', question=question)
+    print(question.answers.all())
+    return render_template('question_s.html', question=question)
 
 @app.route('/profile')
 def profile_page_mine():
@@ -126,7 +130,7 @@ def my_questions():
     print('Question: ',user)
     questions = user.questions.all()
     print(questions)
-    return render_template('questions.html', questions = questions)
+    return render_template('questions_s.html', questions = questions)
         
 @app.route('/user/<uname>', methods=['POST', 'GET'])
 def profile_page(uname):
