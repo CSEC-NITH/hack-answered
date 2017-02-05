@@ -168,7 +168,9 @@ html, body {
 .demo-content {
   max-width: 1080px;
 }
-
+        .answers{
+            height: auto;
+        }
 
 /* TODO: Find a proper solution to have the graphs
  * not float around outside their container in IE10/11.
@@ -178,13 +180,14 @@ html, body {
     </style>
   </head>
   <body>
-
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
       <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
         <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Home</span>
+          <span class="mdl-layout-title">New Question</span>
           <div class="mdl-layout-spacer"></div>
-          
+          <button data-toggle="collapse" data-target="#ques" type="button" class="btn btn-success">Add your question..</button>
+
+
           
          
         </div>
@@ -200,7 +203,7 @@ html, body {
           </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link" href="/qs/all">Home</a>
+          <a class="mdl-navigation__link" href="/">Home</a>
           <a class="mdl-navigation__link" href="/new_question">New Question</a>
           <a class="mdl-navigation__link" href="/qs/all">All Questions</a>
           <a class="mdl-navigation__link" href="/qs/recc">Recommended</a>
@@ -209,29 +212,106 @@ html, body {
           <a class="mdl-navigation__link" href="/logout">Logout<span class="visuallyhidden">Logout</span></a>
         </nav>
       </div>
-      <main class="mdl-layout__content mdl-color--grey-100">
-      {% for q in questions %}
-                      <div class="mdl-grid demo-content">
-                        <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" class="container" style="height:auto; width:100%;">
-                            <div class="col-sm-2" >
-                              <a href="/user/{{q.user.uname}}"><h4>{{q.user.uname}}</h4></a><br>
-                   <span class="glyphicon glyphicon-time"></span>  Date here
-                  </div>
-                            <div class="col-sm-10" style="  padding-top: 30px;">
-                              <a href="/qs/{{q.id}}">
-                                <h6>{{ q.question_text }} </h6>
-                              </a>
-                          {% for tag in q.question_tags %} 
-                          <span class="label label-primary">{{ tag.name }}  </span> &nbsp;
-                          {% endfor %}
-                            </div>
-                          </div>
-                          </div>
-      {% endfor %} 
-          </main>   
+      <main class="mdl-layout__content mdl-color--grey-100" >
+        <div class="mdl-grid demo-content">     
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" class="container" style="height:auto; width:100%;">
+              <div class="col-sm-2" >
+     <h4>username</h4><br>
+     <span class="glyphicon glyphicon-time"></span>  Sep 24, 2015.     
     </div>
-      
-     
+              <div class="col-sm-10">
+                  <div id="form">
+		          <h4>	ENTER YOUR QUESTION</h4>
+    <form  action="/new_question" method="POST" >
+        QUESTION:
+        <input name="question" id="ques_area" type="text"  size="100%">
+        <br><br>
+        <!--SELECT TAGS:<br>-->
+        <!--<select id="tags">-->
+          <!--<option>CPP 	</option>-->
+          <!--<option>C 		</option>-->
+          <!--<option>JAVA 	</option>-->
+          <!--<option>PYTHON	</option>-->
+          <!--<option>RUBY 	</option>-->
+          <!--<option>MILK 	</option>-->
+          <!--<option>CSS 	</option>-->
+          <!--<option>HTML 	</option>-->
+          <!--<option>WHAT's 	</option>-->
+          <!--<option>UP 		</option>-->
+        <!--</select>-->
+        <!--<input type="button" onclick="insrt()" value=">>">-->
+        <input id="tag_box" name="tags" type="text" id="alltags" size="100%">
+        <!--<input type="button"  value="SUBMIT" onclick="sendpost()">-->
+        <br><br>
+        <button type="submit" >Submit</button>
+		</form>
+	<script>
+	
+	var txt="";
+
+	function insrt()
+{
+	var tags = document.getElementById("tags");
+	var otag = tags.options[tags.selectedIndex].text;
+//	var txt = document.getElementById("alltags").value;
+	if(txt=="")		
+	txt = txt + otag;
+	else
+		txt=txt + "," + otag;
+	document.getElementById("alltags").value=txt;
+}
+
+
+	function sendpost()
+	{
+	var error=true;;
+	var pst=document.getElementById("postt").value;
+	if(pst=="")
+		{
+		alert('Please Enter your question!!!');
+		errror=false;
+		}
+	if(txt=="")
+	{
+		alert('Please Enter a tag man!!!');
+		errror=false;
+	}
+	return errror;
+	}
+
+	</script>
+	</div>
+    </div>
+    </div>
+    </div>
+    
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script>
+    function uniq(a) {
+    var prims = {"boolean":{}, "number":{}, "string":{}}, objs = [];
+
+    return a.filter(function(item) {
+        var type = typeof item;
+        if(type in prims)
+            return prims[type].hasOwnProperty(item) ? false : (prims[type][item] = true);
+        else
+            return objs.indexOf(item) >= 0 ? false : objs.push(item);
+    });
+    }
+
+    var area = document.getElementById('ques_area');
+    var tagbox = document.getElementById('tag_box');
+    var myTags = []
+    var regex = /#\w*\s/g;
+    area.addEventListener("keyup", function() {
+        console.log('some change');
+        console.log(area.value);
+        var myTag = area.value.match(regex);
+        console.log(myTag);
+        myTags = uniq(myTag);
+        console.log(myTags);
+        tagbox.value = myTags.join(',');
+    });
+</script>
   </body>
 </html>

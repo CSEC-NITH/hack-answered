@@ -152,6 +152,7 @@ def my_answers():
 @app.route('/new_question', methods=['GET','POST'])
 def new_qs():
     if request.method == 'POST':
+        print('SOmething POST')
         uname = session['user']
         user = User.query.filter_by(uname=uname).first()
         tags = request.form['tags']
@@ -167,7 +168,7 @@ def new_qs():
             db.session.add(tag_n)
         db.session.commit()
         print(qs_new)
-    return render_template('new_question.html')
+    return render_template('askques.html')
 
 @app.route('/api/ct')
 def create_tables():

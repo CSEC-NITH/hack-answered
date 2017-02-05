@@ -186,9 +186,9 @@ html, body {
             <span class="mdl-layout-title">Home</span>
           </a>
           <div class="mdl-layout-spacer"></div>
-          <!--<a href="/">-->
-            <!--<button data-toggle="collapse" data-target="#ans" type="button" class="btn btn-success">Add your answer..</button>-->
-          <!--</a>-->
+          <a href="#">
+            <button data-toggle="collapse" data-target="#ans" type="button" class="btn btn-success">Add your answer..</button>
+          </a>
         </div>
       </header>
       <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
@@ -213,9 +213,9 @@ html, body {
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content">     
-          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" class="container" style="height:150px; width:auto;">
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" class="container" style="height:auto; width:100%;">
               <div class="col-sm-2" >
-                <a href="/user/{{question.user.uname}}"><h4>{{ question.user.uname }}</h4></a><br>
+                <a href="/user/{{question.user.uname}}"><h5>{{question.user.uname}}</h5></a><br>
      <span class="glyphicon glyphicon-time"></span>  Sep 24, 2015.     
     </div>
               <div class="col-sm-10" style="  padding-top: 30px;">
@@ -230,21 +230,24 @@ html, body {
           
           
             <form action="#" method="POST">
-              <!--<div id="ans" class="collapse">-->
-                <!--<div class="form-group" >-->
-                  <!--<label for="comment">Answer:</label>-->
-                  <input name="answer" class="form-control mdl-grid" rows="4" id=""  style="max-width:1000px; "></input>
-                   <button type="button" class="btn btn-primary">
+              <div id="ans" class="collapse">
+                <div class="form-group" >
+                  <label for="comment" style="margin-left:5.5%">Answer:</label>
+                             <!--     <h5 >ANSWER:</h5>-->
+                <input name="answer" class="form-control mdl-grid" rows="4" id=""  style="max-width:1000px; ">
+                <br>
+                <br>
+                   <button type="button" class="btn btn-primary" style="margin-left:5.5%">
                    submit
                   </button>
-                <!--</div>-->
-              <!--</div>-->
+                  </div>
+                </div>
             </form>
           
        
         {% for answer in question.answers.all() %}
         <div class="mdl-grid " style="max-width:1000px; ">
-          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" class="container" style="height:auto;; width:auto;">
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" class="container" style="height:auto;; width:100%;">
               <div class="col-sm-2" >
                 <a href="/user/{{answer.user.uname}}"><h6>{{answer.user.uname}}</h6></a><br>
                  <h6>  <span class="glyphicon glyphicon-time"></span>  Sep 24, 2015.    </h6>
