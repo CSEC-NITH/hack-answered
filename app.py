@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import request
 from models import User, UserTag, Question, QuestionTag, Answer
 from rdb import db
+from flask_babel import format_datetime,format_date,Babel
+
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = "some_key"
@@ -11,6 +13,7 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'false'
 db.init_app(app)
+Babel(app)
 
 #######################################################
 #   Templates: 
@@ -23,6 +26,12 @@ db.init_app(app)
 #   new_question.html 
 #
 ######################################################
+
+
+def reformat_date(date,format =None):
+    return format_date(date,format)
+
+app.jinja_env.filters['datetime'] = reformat_date
 
 @app.route('/')
 def first_page():
